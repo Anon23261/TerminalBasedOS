@@ -2,7 +2,7 @@ import os
 import time  # Import time for loading animation
 from core.system import register_command, handle_command, load_extensions
 from core.commands import register_builtin_commands
-from core.platform_utils import load_raspi_firmware, check_partitions
+from core.platform_utils import load_raspi_firmware, check_partitions, check_linux_kernel
 
 def ghost_boot_screen():
     """Displays the custom Ghost OS boot screen with a loading animation."""
@@ -20,6 +20,9 @@ def ghost_boot_screen():
 def main():
     """Main function to start Ghost OS."""
     ghost_boot_screen()
+    if not check_linux_kernel():
+        print("Linux kernel check failed. Ensure you are running a supported Linux system.")
+        return
     if not check_partitions():
         print("Partition check failed. Ensure proper Linux partitions are set up.")
         return
